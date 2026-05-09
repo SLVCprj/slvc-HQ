@@ -374,6 +374,72 @@ tr:last-child td { border-bottom:none; }
 .rv { opacity:0; transform:translateY(24px); transition:opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1); }
 .rv.vis { opacity:1; transform:translateY(0); }
 
+/* ─── STELLAR THEME ─── */
+:root {
+  --gold-1: #F5C842;
+  --gold-2: #FFE17D;
+  --gold-3: #C9982B;
+  --gold-glow: rgba(245,200,66,0.25);
+}
+
+/* Stars canvas */
+#stars-canvas { position:fixed; inset:0; pointer-events:none; z-index:0; }
+
+/* Motto */
+.motto-block { text-align:center; margin:80px 0 72px; position:relative; z-index:10; }
+.motto-pre { font-family:var(--fm); font-size:9px; letter-spacing:5px; text-transform:uppercase; color:rgba(245,200,66,0.35); margin-bottom:28px; display:flex; align-items:center; justify-content:center; gap:16px; }
+.motto-pre::before,.motto-pre::after { content:''; flex:1; max-width:80px; height:1px; background:linear-gradient(to right,transparent,rgba(245,200,66,0.25),transparent); }
+.motto-line { font-family:var(--fd); font-size:clamp(34px,5.5vw,76px); letter-spacing:5px; line-height:1.05; color:#fff; display:block; }
+.motto-line .g { background:linear-gradient(135deg, var(--gold-3) 0%, var(--gold-1) 45%, var(--gold-2) 70%, var(--gold-1) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.motto-sep { width:1px; height:52px; background:linear-gradient(to bottom,transparent,rgba(245,200,66,0.35),transparent); margin:28px auto; }
+.motto-bottom { font-family:var(--fm); font-size:10px; letter-spacing:4px; color:rgba(255,255,255,0.2); text-transform:uppercase; }
+
+/* Values */
+.values-section { margin:0 0 80px; position:relative; z-index:10; text-align:left; }
+.values-eyebrow { font-family:var(--fm); font-size:9px; letter-spacing:5px; text-transform:uppercase; color:rgba(245,200,66,0.4); text-align:center; margin-bottom:40px; }
+.values-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+.value-card { background:rgba(245,200,66,0.02); border:1px solid rgba(245,200,66,0.1); border-radius:24px; padding:32px 24px; position:relative; overflow:hidden; transition:all 0.45s cubic-bezier(0.16,1,0.3,1); cursor:default; }
+.value-card::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 0%,rgba(245,200,66,0.07),transparent 70%); opacity:0; transition:opacity 0.4s; }
+.value-card:hover { border-color:rgba(245,200,66,0.28); transform:translateY(-8px); box-shadow:0 28px 64px rgba(245,200,66,0.06),0 0 0 1px rgba(245,200,66,0.06); }
+.value-card:hover::after { opacity:1; }
+.value-num { font-family:var(--fm); font-size:8px; letter-spacing:3px; color:rgba(245,200,66,0.3); margin-bottom:18px; display:block; }
+.value-icon { font-size:26px; margin-bottom:14px; display:block; filter:drop-shadow(0 0 12px rgba(245,200,66,0.3)); }
+.value-title { font-family:var(--fd); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:10px; line-height:1.1; }
+.value-desc { font-size:12px; color:var(--text-muted); line-height:1.65; font-weight:300; }
+
+/* Counter */
+.counter-section { margin:0 0 64px; position:relative; z-index:10; }
+.counter-box { background:linear-gradient(135deg,rgba(245,200,66,0.03) 0%,rgba(255,255,255,0.01) 100%); border:1px solid rgba(245,200,66,0.12); border-radius:32px; padding:60px 48px; text-align:center; position:relative; overflow:hidden; }
+.counter-box::before { content:''; position:absolute; top:-80%; left:50%; transform:translateX(-50%); width:70%; height:200%; background:radial-gradient(ellipse at center,rgba(245,200,66,0.05) 0%,transparent 60%); pointer-events:none; }
+.counter-box::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,rgba(245,200,66,0.2),transparent); }
+.counter-eyebrow { font-family:var(--fm); font-size:9px; letter-spacing:6px; text-transform:uppercase; color:rgba(245,200,66,0.4); margin-bottom:24px; }
+.counter-main { display:flex; align-items:baseline; justify-content:center; gap:4px; margin-bottom:6px; }
+.counter-number { font-family:var(--fd); font-size:clamp(68px,11vw,152px); letter-spacing:2px; line-height:1; background:linear-gradient(135deg,var(--gold-3) 0%,var(--gold-1) 40%,var(--gold-2) 65%,var(--gold-1) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.counter-label { font-family:var(--fb); font-size:13px; color:rgba(255,255,255,0.3); letter-spacing:3px; text-transform:uppercase; margin-bottom:40px; font-weight:300; }
+.counter-prog-wrap { background:rgba(255,255,255,0.04); border-radius:99px; height:2px; overflow:hidden; max-width:480px; margin:0 auto 10px; }
+.counter-prog-bar { height:100%; border-radius:99px; background:linear-gradient(90deg,var(--gold-3),var(--gold-1),var(--gold-2)); transition:width 2s cubic-bezier(0.16,1,0.3,1); min-width:0; }
+.counter-prog-lbl { font-family:var(--fm); font-size:9px; letter-spacing:2px; color:rgba(255,255,255,0.18); }
+.counter-edit { display:flex; gap:10px; justify-content:center; margin-top:36px; align-items:center; flex-wrap:wrap; }
+.counter-inp { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:11px 20px; color:#fff; font-family:var(--fd); font-size:20px; letter-spacing:1px; width:180px; text-align:center; transition:border-color 0.2s; -webkit-appearance:none; }
+.counter-inp:focus { outline:none; border-color:rgba(245,200,66,0.4); background:rgba(245,200,66,0.03); }
+.counter-inp::placeholder { color:rgba(255,255,255,0.12); }
+.counter-inp::-webkit-inner-spin-button,.counter-inp::-webkit-outer-spin-button { -webkit-appearance:none; }
+.btn-gold { background:linear-gradient(135deg,var(--gold-3),var(--gold-1)); color:#000; box-shadow:0 8px 28px rgba(245,200,66,0.2); font-weight:700; letter-spacing:1.5px; }
+.btn-gold:hover { transform:translateY(-2px); box-shadow:0 16px 40px rgba(245,200,66,0.35); }
+
+/* Adjust hero sub */
+.hero-sub { font-family:var(--fb); font-size:clamp(10px,1.2vw,14px); letter-spacing:16px; font-weight:300; color:rgba(255,255,255,0.25); margin-top:14px; text-transform:uppercase; }
+
+@media (max-width:900px) {
+  .values-grid { grid-template-columns:1fr 1fr; }
+  .counter-box { padding:40px 28px; }
+}
+@media (max-width:600px) {
+  .values-grid { grid-template-columns:1fr 1fr; }
+  .motto-line { font-size:28px; letter-spacing:3px; }
+  .counter-number { font-size:68px; }
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 900px) {
   .wrap { padding: 0 24px; }
@@ -407,6 +473,7 @@ tr:last-child td { border-bottom:none; }
 </head>
 <body data-theme="home">
 
+<canvas id="stars-canvas"></canvas>
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cr"></div>
 <div class="grain"></div>
@@ -483,6 +550,65 @@ tr:last-child td { border-bottom:none; }
       </div>
       </div><!-- /founders-grid -->
     </div><!-- /hero-title-box -->
+
+    <!-- MOTTO -->
+    <div class="motto-block rv vis" style="transition-delay:0.14s;">
+      <div class="motto-pre">il nostro credo</div>
+      <span class="motto-line"><span class="g">Sii fedele</span> a te stesso.</span>
+      <span class="motto-line">Sii <span class="g">creativo.</span></span>
+      <div class="motto-sep"></div>
+      <div class="motto-bottom">SleeveAce · Born to reach billions</div>
+    </div>
+
+    <!-- VALORI -->
+    <div class="values-section rv vis" style="transition-delay:0.20s;">
+      <div class="values-eyebrow">I valori che ci guidano</div>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-num">01</span>
+          <span class="value-icon">🤝</span>
+          <div class="value-title">AIUTARE LE PERSONE</div>
+          <div class="value-desc">Ogni cosa che costruiamo nasce per servire gli altri. Il successo è vuoto se non tocca vite reali.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-num">02</span>
+          <span class="value-icon">✨</span>
+          <div class="value-title">STARE BENE</div>
+          <div class="value-desc">Il benessere non è un lusso — è il punto di partenza. Corpo, mente, energia. Tutto il resto segue.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-num">03</span>
+          <span class="value-icon">💎</span>
+          <div class="value-title">GUADAGNARE</div>
+          <div class="value-desc">La prosperità è un diritto. Costruire ricchezza in modo etico è uno dei gesti d'amore più grandi.</div>
+        </div>
+        <div class="value-card">
+          <span class="value-num">04</span>
+          <span class="value-icon">🚀</span>
+          <div class="value-title">MIGLIORARSI</div>
+          <div class="value-desc">Ogni giorno migliore del precedente. La crescita non è un'opzione — è la nostra natura.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COUNTER PERSONE AIUTATE -->
+    <div class="counter-section rv vis" style="transition-delay:0.28s;">
+      <div class="counter-box">
+        <div class="counter-eyebrow">persone aiutate · obiettivo 1.000.000</div>
+        <div class="counter-main">
+          <div class="counter-number" id="ph-number">0</div>
+        </div>
+        <div class="counter-label">vite che stiamo cambiando</div>
+        <div class="counter-prog-wrap">
+          <div class="counter-prog-bar" id="ph-bar" style="width:0%"></div>
+        </div>
+        <div class="counter-prog-lbl" id="ph-lbl">0% verso 1.000.000</div>
+        <div class="counter-edit">
+          <input class="counter-inp" id="ph-inp" type="number" min="0" placeholder="0" inputmode="numeric">
+          <button class="btn btn-gold btn-sm" onclick="savePeopleHelped()">Aggiorna</button>
+        </div>
+      </div>
+    </div>
 
     <div class="home-stats rv vis" style="transition-delay:0.24s; text-align:left;">
       <div class="hstat">
@@ -1478,11 +1604,110 @@ function updateLabRevenue() {
   if (lbl) lbl.textContent = `${pct}% di €40.000${labIn > 0 ? ' — mancano ' + fmtEur(target - labIn) : ''}`;
 }
 
+// ─── STARS CANVAS ───
+(function initStars() {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars = [];
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for (let i = 0; i < 220; i++) {
+    stars.push({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.1 + 0.2,
+      a: Math.random(),
+      da: (Math.random() * 0.004 + 0.001) * (Math.random() < 0.5 ? 1 : -1),
+      speed: Math.random() * 0.00008 + 0.00002,
+      gold: Math.random() < 0.15
+    });
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      s.a = Math.max(0, Math.min(1, s.a + s.da));
+      if (s.a <= 0 || s.a >= 1) s.da *= -1;
+      s.y -= s.speed;
+      if (s.y < 0) { s.y = 1; s.x = Math.random(); }
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.gold
+        ? `rgba(245,200,66,${s.a * 0.6})`
+        : `rgba(255,255,255,${s.a * 0.45})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ─── PEOPLE HELPED COUNTER ───
+const PEOPLE_KEY = 'sa_people_helped';
+let peopleHelped = 0;
+
+async function loadPeopleHelped() {
+  if (USE_DB) {
+    const { data } = await db.from('config').select('value').eq('key', 'people_helped').maybeSingle();
+    peopleHelped = parseInt(data?.value) || 0;
+  } else {
+    peopleHelped = parseInt(localStorage.getItem(PEOPLE_KEY)) || 0;
+  }
+  const inp = document.getElementById('ph-inp');
+  if (inp) inp.value = peopleHelped || '';
+  animateCounter(peopleHelped);
+}
+
+async function savePeopleHelped() {
+  const val = parseInt(document.getElementById('ph-inp').value) || 0;
+  peopleHelped = Math.max(0, val);
+  if (USE_DB) {
+    const { error } = await db.from('config').upsert({ key: 'people_helped', value: String(peopleHelped) }, { onConflict: 'key' });
+    if (error) { showToast('Errore salvataggio'); console.error(error); return; }
+  } else {
+    localStorage.setItem(PEOPLE_KEY, peopleHelped);
+  }
+  animateCounter(peopleHelped);
+  showToast('✓ Counter aggiornato');
+}
+
+function animateCounter(target) {
+  const numEl = document.getElementById('ph-number');
+  const barEl = document.getElementById('ph-bar');
+  const lblEl = document.getElementById('ph-lbl');
+  if (!numEl) return;
+  const goal = 1000000;
+  const pct = Math.min(100, (target / goal) * 100);
+  if (barEl) barEl.style.width = Math.max(target > 0 ? 0.05 : 0, pct) + '%';
+  const start = parseInt(numEl.textContent.replace(/\D/g, '')) || 0;
+  const duration = 1600;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(1, elapsed / duration);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.round(start + (target - start) * ease);
+    numEl.textContent = current.toLocaleString('it-IT');
+    if (progress < 1) requestAnimationFrame(step);
+    else {
+      numEl.textContent = target.toLocaleString('it-IT');
+      if (lblEl) {
+        const remaining = goal - target;
+        lblEl.textContent = remaining > 0
+          ? `${pct.toFixed(4)}% verso 1.000.000 · mancano ${remaining.toLocaleString('it-IT')} persone`
+          : '🌟 UN MILIONE RAGGIUNTO!';
+      }
+    }
+  }
+  requestAnimationFrame(step);
+  if (lblEl && target === 0) lblEl.textContent = '0% verso 1.000.000';
+}
+
 // ─── INIT ───
 setTimeout(() => {
   document.querySelectorAll('#s-home .rv').forEach((el,i) => setTimeout(()=>el.classList.add('vis'), i*80));
 }, 80);
 updateHomeStats();
+loadPeopleHelped();
 setInterval(() => { if (currentSection==='home') updateHomeStats(); }, 15000);
 </script>
 </body>
