@@ -48,6 +48,7 @@ body[data-theme="lab"] .glow-bg { background: radial-gradient(circle at 50% 10%,
 body[data-theme="agenda"] .glow-bg { background: radial-gradient(circle at 30% 20%, rgba(251,191,36,0.06) 0%, transparent 60%); }
 body[data-theme="finanze"] .glow-bg { background: radial-gradient(circle at 60% 10%, rgba(34,197,94,0.06) 0%, transparent 60%); }
 body[data-theme="affiliazioni"] .glow-bg { background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.02) 0%, transparent 60%); }
+body[data-theme="persone"] .glow-bg { background: radial-gradient(circle at 40% 10%, rgba(34,211,238,0.07) 0%, transparent 60%); }
 
 /* ─── NAV ─── */
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; border-bottom: 1px solid transparent; transition: all 0.4s ease; }
@@ -249,6 +250,8 @@ tr:last-child td { border-bottom:none; }
 .inp { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:14px; padding:14px 18px; color:#fff; font-family:var(--fb); font-size:16px; width:100%; transition:border-color 0.2s, background 0.2s; -webkit-appearance:none; }
 .inp:focus { outline:none; border-color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.07); }
 .inp::placeholder { color:rgba(255,255,255,0.2); }
+select.inp { appearance:none; cursor:pointer; }
+select.inp option { background:#1a1a2e; color:#fff; }
 
 /* ─── AMOUNT INPUT ─── */
 .amount-wrap { position:relative; }
@@ -489,6 +492,7 @@ tr:last-child td { border-bottom:none; }
       <a onclick="navTo('lifeflow')" id="l-lifeflow">LifeFlow</a>
       <a onclick="navTo('lab')" id="l-lab">Lab</a>
       <a onclick="navTo('affiliazioni')" id="l-affiliazioni">Affiliazioni</a>
+      <a onclick="navTo('persone')" id="l-persone">Persone</a>
       <a onclick="navTo('agenda')" id="l-agenda">Agenda</a>
       <a onclick="navTo('finanze')" id="l-finanze">Finanze</a>
     </div>
@@ -503,6 +507,7 @@ tr:last-child td { border-bottom:none; }
   <a onclick="navTo('lifeflow');toggleMobileNav()" id="ml-lifeflow">LIFEFLOW</a>
   <a onclick="navTo('lab');toggleMobileNav()" id="ml-lab">LAB</a>
   <a onclick="navTo('affiliazioni');toggleMobileNav()" id="ml-affiliazioni">AFFILIAZIONI</a>
+  <a onclick="navTo('persone');toggleMobileNav()" id="ml-persone">PERSONE</a>
   <a onclick="navTo('agenda');toggleMobileNav()" id="ml-agenda">AGENDA</a>
   <a onclick="navTo('finanze');toggleMobileNav()" id="ml-finanze">FINANZE</a>
 </div>
@@ -603,9 +608,8 @@ tr:last-child td { border-bottom:none; }
           <div class="counter-prog-bar" id="ph-bar" style="width:0%"></div>
         </div>
         <div class="counter-prog-lbl" id="ph-lbl">0% verso 1.000.000</div>
-        <div class="counter-edit">
-          <input class="counter-inp" id="ph-inp" type="number" min="0" placeholder="0" inputmode="numeric">
-          <button class="btn btn-gold btn-sm" onclick="savePeopleHelped()">Aggiorna</button>
+        <div style="margin-top:28px;">
+          <button class="btn btn-gold btn-sm" onclick="navTo('persone')">Vedi Persone →</button>
         </div>
       </div>
     </div>
@@ -820,7 +824,10 @@ tr:last-child td { border-bottom:none; }
     <div class="glass-box rv mb-40" style="padding:0;overflow:hidden;">
       <div style="padding:20px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-dim);background:rgba(255,255,255,0.015);">
         <div class="block-title" style="margin:0;">Deal Registrati</div>
-        <span id="aff-count" style="font-family:var(--fm);font-size:11px;color:var(--text-muted);"></span>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span id="aff-count" style="font-family:var(--fm);font-size:11px;color:var(--text-muted);"></span>
+          <button class="btn" style="padding:8px 18px;font-size:11px;letter-spacing:1.5px;" onclick="openAffModal()">+ AGGIUNGI</button>
+        </div>
       </div>
       <div class="table-wrap">
         <table>
@@ -830,7 +837,8 @@ tr:last-child td { border-bottom:none; }
               <th>Status</th>
               <th>Offerta / CPA</th>
               <th>Contatto</th>
-              <th>Note</th>
+              <th>Note / Link</th>
+              <th style="width:80px;"></th>
             </tr>
           </thead>
           <tbody id="aff-body"></tbody>
@@ -844,6 +852,52 @@ tr:last-child td { border-bottom:none; }
       <div class="stat-box" style="padding:22px;"><h4 style="font-size:16px;color:#fff;margin-bottom:8px;">MyFundedFX</h4><span class="badge b-dim">In Programma</span></div>
       <div class="stat-box" style="padding:22px;"><h4 style="font-size:16px;color:#fff;margin-bottom:8px;">Rithmic</h4><span class="badge b-dim">Da Esplorare</span></div>
       <div class="stat-box" style="padding:22px;"><h4 style="font-size:16px;color:#fff;margin-bottom:8px;">NinjaTrader</h4><span class="badge b-dim">Da Esplorare</span></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PERSONE
+════════════════════════════════════════ -->
+<div class="section" id="s-persone">
+  <div class="wrap">
+
+    <div class="ph rv">
+      <div class="ph-bc">SleeveAce / Persone</div>
+      <h2 style="background:linear-gradient(135deg,#22d3ee,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">PERSONE</h2>
+      <p class="ph-sub">Tutte le persone che stiamo aiutando — tramite LifeFlow, Lab o altro. Il counter nella home si aggiorna in automatico.</p>
+    </div>
+
+    <div class="filter-row rv mb-24">
+      <button class="ftab active" onclick="filterPersone(this,'all')">Tutti</button>
+      <button class="ftab" onclick="filterPersone(this,'lifeflow')">LifeFlow</button>
+      <button class="ftab" onclick="filterPersone(this,'lab')">Lab</button>
+      <button class="ftab" onclick="filterPersone(this,'altro')">Altro</button>
+    </div>
+
+    <div class="glass-box rv mb-40" style="padding:0;overflow:hidden;">
+      <div style="padding:20px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-dim);background:rgba(255,255,255,0.015);">
+        <div class="block-title" style="margin:0;">Persone Registrate</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span id="prs-count" style="font-family:var(--fm);font-size:11px;color:var(--text-muted);"></span>
+          <button class="btn" style="padding:8px 18px;font-size:11px;letter-spacing:1.5px;background:rgba(34,211,238,0.1);border-color:rgba(34,211,238,0.3);color:#67e8f9;" onclick="openPersonModal()">+ AGGIUNGI</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Progetto</th>
+              <th>Contatto</th>
+              <th>Note</th>
+              <th style="width:80px;"></th>
+            </tr>
+          </thead>
+          <tbody id="prs-body"></tbody>
+        </table>
+      </div>
     </div>
 
   </div>
@@ -991,6 +1045,88 @@ tr:last-child td { border-bottom:none; }
 </div>
 
 <!-- ════════════════════════════════════════
+     MODAL — AFFILIAZIONE
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="aff-overlay" onclick="closeAffModal()"></div>
+<div class="modal-panel" id="aff-modal">
+  <div class="modal-handle"></div>
+  <div class="modal-header">
+    <div class="modal-title" id="aff-modal-title">NUOVO DEAL</div>
+    <button class="modal-close" onclick="closeAffModal()">✕</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="af-id">
+    <div class="field">
+      <label class="field-label">Brand / Broker</label>
+      <input class="inp" id="af-brand" type="text" placeholder="Es: Funding Pips, FTMO, XM..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="field-label">Status</label>
+      <select class="inp" id="af-status">
+        <option value="Attiva">Attiva</option>
+        <option value="In Corso">In Corso</option>
+        <option value="In Attesa">In Attesa</option>
+        <option value="In Programma">In Programma</option>
+        <option value="Chiusa">Chiusa</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-label">Offerta / CPA</label>
+      <input class="inp" id="af-offer" type="text" placeholder="Es: FTD $400 — CPA $400 @ 2 Lotti" autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="field-label">Contatto</label>
+      <input class="inp" id="af-contact" type="text" placeholder="Nome contatto o —" autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="field-label">Note</label>
+      <input class="inp" id="af-notes" type="text" placeholder="Note aggiuntive..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="field-label">Link Affiliato (opzionale)</label>
+      <input class="inp" id="af-link" type="url" placeholder="https://..." autocomplete="off">
+    </div>
+    <button class="btn modal-cta" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.4);color:#fbbf24;" id="aff-modal-btn" onclick="saveAff()">Salva Deal</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL — PERSONA
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="prs-overlay" onclick="closePersonModal()"></div>
+<div class="modal-panel" id="prs-modal">
+  <div class="modal-handle"></div>
+  <div class="modal-header">
+    <div class="modal-title" id="prs-modal-title">NUOVA PERSONA</div>
+    <button class="modal-close" onclick="closePersonModal()">✕</button>
+  </div>
+  <div class="modal-body">
+    <input type="hidden" id="pf-id">
+    <div class="field">
+      <label class="field-label">Nome</label>
+      <input class="inp" id="pf-name" type="text" placeholder="Nome e cognome..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="field-label">Progetto / Come lo stiamo aiutando</label>
+      <div class="chip-group" id="chip-prs-proj">
+        <div class="chip sel-lifeflow" data-val="lifeflow" onclick="selectPrsChip(this)">LifeFlow</div>
+        <div class="chip" data-val="lab" onclick="selectPrsChip(this)">Lab</div>
+        <div class="chip" data-val="altro" onclick="selectPrsChip(this)">Altro</div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field-label">Contatto (opzionale)</label>
+      <input class="inp" id="pf-contact" type="text" placeholder="Email, telefono, IG..." autocomplete="off">
+    </div>
+    <div class="field">
+      <label class="field-label">Note (opzionale)</label>
+      <input class="inp" id="pf-notes" type="text" placeholder="Situazione, obiettivo..." autocomplete="off">
+    </div>
+    <button class="btn modal-cta" style="background:rgba(34,211,238,0.12);border-color:rgba(34,211,238,0.35);color:#67e8f9;" onclick="savePerson()">Salva Persona</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
      MODAL — NUOVA VOCE FINANZIARIA
 ════════════════════════════════════════ -->
 <div class="modal-overlay" id="fin-overlay" onclick="closeFinModal()"></div>
@@ -1091,6 +1227,7 @@ function navTo(id) {
   }
   currentSection = id;
   if(id==='affiliazioni') renderAff();
+  if(id==='persone') renderPeople();
   if(id==='agenda') renderTasks();
   if(id==='finanze') renderFinances();
   if(id==='home') updateHomeStats();
@@ -1128,34 +1265,278 @@ updateClock();
 setInterval(updateClock, 30000);
 
 // ─── AFFILIATIONS ───
-const affs = [
-  { brand:'Funding Pips', status:'Attiva', c:'b-green', offer:'Codice: 67f23d18', contact:'Dashboard', notes:'<a href="https://app.fundingpips.com/register?ref=67f23d18" target="_blank" style="color:#4ade80;border-bottom:1px solid rgba(74,222,128,0.4);text-decoration:none;">Link Affiliato ↗</a>' },
-  { brand:'FTMO', status:'In Corso', c:'b-purple', offer:'Richiesta fatta', contact:'—', notes:'In attesa di risposta.' },
-  { brand:'AVA', status:'In Corso', c:'b-purple', offer:'Proposta iniziale + Bonus', contact:'Giancarlo Barosso', notes:'Attendere risposta finale.' },
-  { brand:'XM', status:'In Corso', c:'b-purple', offer:'FTD $400 — CPA $400 @ 2 Lotti', contact:'Elisa Prieto Fajardo', notes:'Proposta ricevuta.' },
-  { brand:'AXI', status:'In Attesa', c:'b-dim', offer:'Richiesta inviata', contact:'Giuseppe Di Stefano', notes:'In attesa di risposta.' },
-  { brand:'MyFundedFutures', status:'In Programma', c:'b-dim', offer:'Requisito: 500 followers', contact:'—', notes:'Stand-by fino al target social.' },
-  { brand:'IC Markets', status:'Chiusa', c:'b-dim', offer:'Nessun CPA disponibile', contact:'Partners', notes:'Non si procede.' }
+const AFF_FALLBACK = [
+  { id:'fp', brand:'Funding Pips', status:'Attiva', offer:'Codice: 67f23d18', contact:'Dashboard', notes:'', affiliate_link:'https://app.fundingpips.com/register?ref=67f23d18' },
+  { id:'ftmo', brand:'FTMO', status:'In Corso', offer:'Richiesta fatta', contact:'—', notes:'In attesa di risposta.', affiliate_link:'' },
+  { id:'ava', brand:'AVA', status:'In Corso', offer:'Proposta iniziale + Bonus', contact:'Giancarlo Barosso', notes:'Attendere risposta finale.', affiliate_link:'' },
+  { id:'xm', brand:'XM', status:'In Corso', offer:'FTD $400 — CPA $400 @ 2 Lotti', contact:'Elisa Prieto Fajardo', notes:'Proposta ricevuta.', affiliate_link:'' },
+  { id:'axi', brand:'AXI', status:'In Attesa', offer:'Richiesta inviata', contact:'Giuseppe Di Stefano', notes:'In attesa di risposta.', affiliate_link:'' },
+  { id:'mff', brand:'MyFundedFutures', status:'In Programma', offer:'Requisito: 500 followers', contact:'—', notes:'Stand-by fino al target social.', affiliate_link:'' },
+  { id:'icm', brand:'IC Markets', status:'Chiusa', offer:'Nessun CPA disponibile', contact:'Partners', notes:'Non si procede.', affiliate_link:'' }
 ];
+let affs = [];
+
+const AFF_STATUS_CLASS = { 'Attiva':'b-green', 'In Corso':'b-purple', 'In Attesa':'b-dim', 'In Programma':'b-dim', 'Chiusa':'b-dim' };
+
+function _escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+async function loadAffs() {
+  if (USE_DB) {
+    const { data, error } = await db.from('affiliations').select('*').order('created_at', { ascending: true });
+    if (error) { console.error('loadAffs:', error); affs = AFF_FALLBACK; return; }
+    affs = data;
+  } else {
+    affs = AFF_FALLBACK;
+  }
+}
 
 let affFilter = 'all';
 function filterAff(btn, val) {
   document.querySelectorAll('#s-affiliazioni .ftab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   affFilter = val;
-  renderAff();
+  paintAffs();
 }
-function renderAff() {
-  const filtered = affFilter === 'all' ? affs : affs.filter(a => a.status.startsWith(affFilter));
+
+async function renderAff() {
+  document.getElementById('aff-body').innerHTML = '<tr><td colspan="6" class="loading-row">Caricamento</td></tr>';
+  await loadAffs();
+  paintAffs();
+}
+
+function paintAffs() {
+  const filtered = affFilter === 'all' ? affs : affs.filter(a => a.status === affFilter || a.status.startsWith(affFilter));
   document.getElementById('aff-count').textContent = `${filtered.length} deal`;
-  document.getElementById('aff-body').innerHTML = filtered.map(a => `
-    <tr>
-      <td><strong style="color:#fff;font-size:15px;">${a.brand}</strong></td>
-      <td><span class="badge ${a.c}">${a.status}</span></td>
-      <td style="color:rgba(255,255,255,0.75);">${a.offer}</td>
-      <td style="font-family:var(--fm);font-size:11px;color:var(--text-muted);">${a.contact}</td>
-      <td style="color:var(--text-muted);font-size:13px;">${a.notes}</td>
-    </tr>`).join('');
+  if (!filtered.length) {
+    document.getElementById('aff-body').innerHTML = '<tr><td colspan="6" style="padding:32px;text-align:center;color:var(--text-muted);font-size:13px;">Nessun deal trovato</td></tr>';
+    return;
+  }
+  document.getElementById('aff-body').innerHTML = filtered.map(a => {
+    const sc = AFF_STATUS_CLASS[a.status] || 'b-dim';
+    const linkHtml = a.affiliate_link
+      ? `<a href="${_escHtml(a.affiliate_link)}" target="_blank" rel="noopener" style="color:#4ade80;border-bottom:1px solid rgba(74,222,128,0.4);text-decoration:none;font-size:12px;">Link ↗</a>`
+      : '';
+    const notesHtml = [_escHtml(a.notes), linkHtml].filter(Boolean).join(' &nbsp;');
+    return `<tr>
+      <td><strong style="color:#fff;font-size:15px;">${_escHtml(a.brand)}</strong></td>
+      <td><span class="badge ${sc}">${_escHtml(a.status)}</span></td>
+      <td style="color:rgba(255,255,255,0.75);">${_escHtml(a.offer)}</td>
+      <td style="font-family:var(--fm);font-size:11px;color:var(--text-muted);">${_escHtml(a.contact)}</td>
+      <td style="color:var(--text-muted);font-size:13px;">${notesHtml}</td>
+      <td style="white-space:nowrap;text-align:right;">
+        <button onclick="openAffModal('${_escHtml(a.id)}')" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px 8px;" title="Modifica">✏️</button>
+        <button onclick="deleteAff('${_escHtml(a.id)}')" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px 8px;" title="Elimina">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── AFF MODAL ───
+function openAffModal(id) {
+  const aff = id ? affs.find(a => String(a.id) === String(id)) : null;
+  document.getElementById('aff-modal-title').textContent = aff ? 'MODIFICA DEAL' : 'NUOVO DEAL';
+  document.getElementById('af-id').value = aff ? aff.id : '';
+  document.getElementById('af-brand').value = aff ? aff.brand : '';
+  document.getElementById('af-status').value = aff ? aff.status : 'In Corso';
+  document.getElementById('af-offer').value = aff ? aff.offer : '';
+  document.getElementById('af-contact').value = aff ? aff.contact : '';
+  document.getElementById('af-notes').value = aff ? aff.notes : '';
+  document.getElementById('af-link').value = aff ? (aff.affiliate_link || '') : '';
+  document.getElementById('aff-overlay').classList.add('open');
+  document.getElementById('aff-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('af-brand').focus(), 300);
+}
+function closeAffModal() {
+  document.getElementById('aff-overlay').classList.remove('open');
+  document.getElementById('aff-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function saveAff() {
+  const brand = document.getElementById('af-brand').value.trim();
+  if (!brand) { showToast('Inserisci il nome del brand'); return; }
+  const id = document.getElementById('af-id').value;
+  const payload = {
+    brand,
+    status: document.getElementById('af-status').value,
+    offer: document.getElementById('af-offer').value.trim() || '—',
+    contact: document.getElementById('af-contact').value.trim() || '—',
+    notes: document.getElementById('af-notes').value.trim(),
+    affiliate_link: document.getElementById('af-link').value.trim()
+  };
+  if (USE_DB) {
+    if (id) {
+      const { error } = await db.from('affiliations').update(payload).eq('id', id);
+      if (error) { showToast('Errore modifica'); console.error(error); return; }
+      const idx = affs.findIndex(a => String(a.id) === String(id));
+      if (idx !== -1) affs[idx] = { ...affs[idx], ...payload };
+    } else {
+      const { data, error } = await db.from('affiliations').insert(payload).select().single();
+      if (error) { showToast('Errore salvataggio'); console.error(error); return; }
+      affs.push(data);
+    }
+  } else {
+    if (id) {
+      const idx = affs.findIndex(a => String(a.id) === String(id));
+      if (idx !== -1) affs[idx] = { ...affs[idx], ...payload };
+    } else {
+      affs.push({ ...payload, id: String(Date.now()) });
+    }
+  }
+  closeAffModal();
+  paintAffs();
+  showToast(id ? '✓ Deal aggiornato' : '✓ Deal aggiunto');
+}
+
+async function deleteAff(id) {
+  if (!confirm('Eliminare questo deal?')) return;
+  if (USE_DB) {
+    const { error } = await db.from('affiliations').delete().eq('id', id);
+    if (error) { showToast('Errore eliminazione'); console.error(error); return; }
+  }
+  affs = affs.filter(a => String(a.id) !== String(id));
+  paintAffs();
+  showToast('Deal eliminato');
+}
+
+// ─── PERSONE ───
+let people = [];
+let prsFilter = 'all';
+let prsProj = 'lifeflow';
+
+const PRS_PROJ_CLASS = { lifeflow:'b-purple', lab:'b-green', altro:'b-dim' };
+const PRS_PROJ_LABEL = { lifeflow:'LifeFlow', lab:'Lab', altro:'Altro' };
+
+async function loadPeople() {
+  if (USE_DB) {
+    const { data, error } = await db.from('people').select('*').order('created_at', { ascending: true });
+    if (error) { console.error('loadPeople:', error); people = []; return; }
+    people = data;
+  } else {
+    try { people = JSON.parse(localStorage.getItem('sa_people')) || []; } catch(e) { people = []; }
+  }
+}
+
+function _savePeopleLocal() { if (!USE_DB) localStorage.setItem('sa_people', JSON.stringify(people)); }
+
+function filterPersone(btn, val) {
+  document.querySelectorAll('#s-persone .ftab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  prsFilter = val;
+  paintPeople();
+}
+
+async function renderPeople() {
+  document.getElementById('prs-body').innerHTML = '<tr><td colspan="5" class="loading-row">Caricamento</td></tr>';
+  await loadPeople();
+  paintPeople();
+  animateCounter(people.length);
+}
+
+function paintPeople() {
+  const filtered = prsFilter === 'all' ? people : people.filter(p => p.proj === prsFilter);
+  document.getElementById('prs-count').textContent = `${filtered.length} persone`;
+  if (!filtered.length) {
+    document.getElementById('prs-body').innerHTML = '<tr><td colspan="5" style="padding:32px;text-align:center;color:var(--text-muted);font-size:13px;">Nessuna persona trovata</td></tr>';
+    return;
+  }
+  document.getElementById('prs-body').innerHTML = filtered.map(p => {
+    const pc = PRS_PROJ_CLASS[p.proj] || 'b-dim';
+    const pl = PRS_PROJ_LABEL[p.proj] || p.proj;
+    return `<tr>
+      <td><strong style="color:#fff;font-size:15px;">${_escHtml(p.name)}</strong></td>
+      <td><span class="badge ${pc}">${pl}</span></td>
+      <td style="font-family:var(--fm);font-size:11px;color:var(--text-muted);">${_escHtml(p.contact||'—')}</td>
+      <td style="color:var(--text-muted);font-size:13px;">${_escHtml(p.notes||'—')}</td>
+      <td style="white-space:nowrap;text-align:right;">
+        <button onclick="openPersonModal('${_escHtml(p.id)}')" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px 8px;" title="Modifica">✏️</button>
+        <button onclick="deletePerson('${_escHtml(p.id)}')" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:13px;padding:4px 8px;" title="Elimina">🗑</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function selectPrsChip(el) {
+  document.getElementById('chip-prs-proj').querySelectorAll('.chip').forEach(c => { c.className = 'chip'; });
+  prsProj = el.dataset.val;
+  el.classList.add('sel-' + prsProj);
+}
+
+function openPersonModal(id) {
+  const p = id ? people.find(x => String(x.id) === String(id)) : null;
+  document.getElementById('prs-modal-title').textContent = p ? 'MODIFICA PERSONA' : 'NUOVA PERSONA';
+  document.getElementById('pf-id').value = p ? p.id : '';
+  document.getElementById('pf-name').value = p ? p.name : '';
+  document.getElementById('pf-contact').value = p ? (p.contact || '') : '';
+  document.getElementById('pf-notes').value = p ? (p.notes || '') : '';
+  const proj = p ? (p.proj || 'lifeflow') : 'lifeflow';
+  prsProj = proj;
+  document.getElementById('chip-prs-proj').querySelectorAll('.chip').forEach(c => {
+    c.className = 'chip';
+    if (c.dataset.val === proj) c.classList.add('sel-' + proj);
+  });
+  document.getElementById('prs-overlay').classList.add('open');
+  document.getElementById('prs-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('pf-name').focus(), 300);
+}
+
+function closePersonModal() {
+  document.getElementById('prs-overlay').classList.remove('open');
+  document.getElementById('prs-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function savePerson() {
+  const name = document.getElementById('pf-name').value.trim();
+  if (!name) { showToast('Inserisci il nome'); return; }
+  const id = document.getElementById('pf-id').value;
+  const payload = {
+    name,
+    proj: prsProj,
+    contact: document.getElementById('pf-contact').value.trim(),
+    notes: document.getElementById('pf-notes').value.trim()
+  };
+  if (USE_DB) {
+    if (id) {
+      const { error } = await db.from('people').update(payload).eq('id', id);
+      if (error) { showToast('Errore modifica'); console.error(error); return; }
+      const idx = people.findIndex(x => String(x.id) === String(id));
+      if (idx !== -1) people[idx] = { ...people[idx], ...payload };
+    } else {
+      const { data, error } = await db.from('people').insert(payload).select().single();
+      if (error) { showToast('Errore salvataggio'); console.error(error); return; }
+      people.push(data);
+    }
+  } else {
+    if (id) {
+      const idx = people.findIndex(x => String(x.id) === String(id));
+      if (idx !== -1) people[idx] = { ...people[idx], ...payload };
+    } else {
+      people.push({ ...payload, id: String(Date.now()) });
+    }
+    _savePeopleLocal();
+  }
+  closePersonModal();
+  paintPeople();
+  animateCounter(people.length);
+  showToast(id ? '✓ Persona aggiornata' : '✓ Persona aggiunta');
+}
+
+async function deletePerson(id) {
+  if (!confirm('Eliminare questa persona?')) return;
+  if (USE_DB) {
+    const { error } = await db.from('people').delete().eq('id', id);
+    if (error) { showToast('Errore eliminazione'); console.error(error); return; }
+  }
+  people = people.filter(x => String(x.id) !== String(id));
+  _savePeopleLocal();
+  paintPeople();
+  animateCounter(people.length);
+  showToast('Persona eliminata');
 }
 
 // ─── CHIP & TYPE STATE ───
@@ -1206,7 +1587,7 @@ function closeFinModal() {
 
 // Close modals on Escape
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') { closeTaskModal(); closeFinModal(); }
+  if(e.key === 'Escape') { closeTaskModal(); closeFinModal(); closeAffModal(); closePersonModal(); }
 });
 
 // ─── SUPABASE ───
@@ -1249,6 +1630,28 @@ document.addEventListener('keydown', e => {
 // );
 // alter table config enable row level security;
 // create policy "open" on config for all using (true) with check (true);
+// create table affiliations (
+//   id uuid default gen_random_uuid() primary key,
+//   brand text not null,
+//   status text not null default 'In Corso',
+//   offer text not null default '—',
+//   contact text not null default '—',
+//   notes text not null default '',
+//   affiliate_link text not null default '',
+//   created_at timestamptz default now()
+// );
+// alter table affiliations enable row level security;
+// create policy "open" on affiliations for all using (true) with check (true);
+// create table people (
+//   id uuid default gen_random_uuid() primary key,
+//   name text not null,
+//   proj text not null default 'lifeflow',
+//   contact text not null default '',
+//   notes text not null default '',
+//   created_at timestamptz default now()
+// );
+// alter table people enable row level security;
+// create policy "open" on people for all using (true) with check (true);
 
 const SUPA_URL = 'https://jmyfhedfjbqfwepmxslu.supabase.co';
 const SUPA_KEY = 'sb_publishable_poXEbIur3sdi3l5Ybyyo4A_da9OCQLE';
@@ -1642,32 +2045,9 @@ function updateLabRevenue() {
 })();
 
 // ─── PEOPLE HELPED COUNTER ───
-const PEOPLE_KEY = 'sa_people_helped';
-let peopleHelped = 0;
-
 async function loadPeopleHelped() {
-  if (USE_DB) {
-    const { data } = await db.from('config').select('value').eq('key', 'people_helped').maybeSingle();
-    peopleHelped = parseInt(data?.value) || 0;
-  } else {
-    peopleHelped = parseInt(localStorage.getItem(PEOPLE_KEY)) || 0;
-  }
-  const inp = document.getElementById('ph-inp');
-  if (inp) inp.value = peopleHelped || '';
-  animateCounter(peopleHelped);
-}
-
-async function savePeopleHelped() {
-  const val = parseInt(document.getElementById('ph-inp').value) || 0;
-  peopleHelped = Math.max(0, val);
-  if (USE_DB) {
-    const { error } = await db.from('config').upsert({ key: 'people_helped', value: String(peopleHelped) }, { onConflict: 'key' });
-    if (error) { showToast('Errore salvataggio'); console.error(error); return; }
-  } else {
-    localStorage.setItem(PEOPLE_KEY, peopleHelped);
-  }
-  animateCounter(peopleHelped);
-  showToast('✓ Counter aggiornato');
+  await loadPeople();
+  animateCounter(people.length);
 }
 
 function animateCounter(target) {
