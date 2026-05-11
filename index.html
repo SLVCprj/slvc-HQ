@@ -472,9 +472,94 @@ select.inp option { background:#1a1a2e; color:#fff; }
   .p-card { padding: 28px; min-height: 260px; }
   .pc-title { font-size: 36px; }
 }
+
+/* ─── AUTH GATE ─── */
+#auth-gate { position:fixed; inset:0; z-index:9999; background:#050505; display:flex; align-items:center; justify-content:center; transition:opacity 0.4s ease; }
+#auth-gate.hiding { opacity:0; pointer-events:none; }
+#auth-gate.hidden { display:none; }
+.auth-panel { width:100%; max-width:420px; padding:0 20px; }
+.auth-logo { font-family:var(--fd); font-size:32px; letter-spacing:4px; text-align:center; margin-bottom:8px; color:#fff; }
+.auth-logo span { color:var(--gold-1); }
+.auth-sub { font-family:var(--fm); font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--text-muted); text-align:center; margin-bottom:48px; }
+.auth-box { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:24px; padding:40px 36px; }
+.auth-title { font-family:var(--fb); font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text-muted); margin-bottom:28px; }
+.auth-field { margin-bottom:16px; }
+.auth-label { font-family:var(--fm); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); display:block; margin-bottom:8px; }
+.auth-inp { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:14px; padding:14px 18px; color:#fff; font-family:var(--fb); font-size:16px; width:100%; box-sizing:border-box; transition:border-color 0.2s; outline:none; }
+.auth-inp:focus { border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.06); }
+.auth-inp::placeholder { color:rgba(255,255,255,0.2); }
+.auth-btn { width:100%; margin-top:24px; padding:16px; background:linear-gradient(135deg,var(--gold-3),var(--gold-1)); color:#000; border:none; border-radius:14px; font-family:var(--fb); font-size:12px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; font-weight:700; transition:opacity 0.2s, transform 0.2s; }
+.auth-btn:hover { opacity:0.9; transform:translateY(-1px); }
+.auth-btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+.auth-err { font-family:var(--fm); font-size:12px; color:#f87171; text-align:center; margin-top:16px; min-height:18px; }
+.auth-ok { font-family:var(--fm); font-size:12px; color:#4ade80; text-align:center; margin-top:16px; min-height:18px; }
+.pwd-rules { font-family:var(--fm); font-size:10px; color:var(--text-muted); margin-top:12px; line-height:1.8; }
+.pwd-rule { display:flex; align-items:center; gap:8px; }
+.pwd-rule.ok { color:#4ade80; }
+.pwd-rule.ok::before { content:'✓'; }
+.pwd-rule:not(.ok)::before { content:'·'; }
+.nav-user { display:flex; align-items:center; gap:12px; }
+.nav-username { font-family:var(--fm); font-size:10px; letter-spacing:2px; color:var(--text-muted); text-transform:uppercase; }
+.nav-logout { background:none; border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:var(--text-muted); font-family:var(--fm); font-size:10px; letter-spacing:1.5px; padding:6px 12px; cursor:pointer; text-transform:uppercase; transition:all 0.2s; }
+.nav-logout:hover { border-color:rgba(239,68,68,0.4); color:#f87171; }
+@media (max-width:600px) { .auth-box { padding:32px 24px; } .nav-username { display:none; } }
 </style>
 </head>
 <body data-theme="home">
+
+<!-- ════════════════════════════════════════
+     AUTH GATE
+════════════════════════════════════════ -->
+<div id="auth-gate">
+
+  <!-- LOGIN PANEL -->
+  <div class="auth-panel" id="auth-login-panel">
+    <div class="auth-logo">SLEEVE<span>ACE</span></div>
+    <div class="auth-sub">HQ · Accesso Riservato</div>
+    <div class="auth-box">
+      <div class="auth-title">Accedi</div>
+      <div class="auth-field">
+        <label class="auth-label" for="auth-username">Username</label>
+        <input class="auth-inp" id="auth-username" type="text" placeholder="simonetabozzi / andreafinucci" autocomplete="username" autocorrect="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label" for="auth-password">Password</label>
+        <input class="auth-inp" id="auth-password" type="password" placeholder="••••••••••••" autocomplete="current-password">
+      </div>
+      <button class="auth-btn" id="auth-login-btn" onclick="doLogin()">Accedi</button>
+      <div class="auth-err" id="auth-err"></div>
+    </div>
+  </div>
+
+  <!-- RESET PASSWORD PANEL -->
+  <div class="auth-panel" id="auth-reset-panel" style="display:none;">
+    <div class="auth-logo">SLEEVE<span>ACE</span></div>
+    <div class="auth-sub">Primo accesso · Imposta la tua password</div>
+    <div class="auth-box">
+      <div class="auth-title">Nuova Password</div>
+      <div class="auth-field">
+        <label class="auth-label" for="auth-newpwd">Nuova Password</label>
+        <input class="auth-inp" id="auth-newpwd" type="password" placeholder="••••••••••••" autocomplete="new-password" oninput="checkPwdRules()">
+      </div>
+      <div class="auth-field">
+        <label class="auth-label" for="auth-confirmpwd">Conferma Password</label>
+        <input class="auth-inp" id="auth-confirmpwd" type="password" placeholder="••••••••••••" autocomplete="new-password">
+      </div>
+      <div class="pwd-rules" id="pwd-rules">
+        <div class="pwd-rule" id="pr-len">Minimo 12 caratteri</div>
+        <div class="pwd-rule" id="pr-upper">Almeno una maiuscola</div>
+        <div class="pwd-rule" id="pr-lower">Almeno una minuscola</div>
+        <div class="pwd-rule" id="pr-num">Almeno un numero</div>
+        <div class="pwd-rule" id="pr-special">Almeno un carattere speciale (!@#$%...)</div>
+        <div class="pwd-rule" id="pr-notdefault">Diversa dalla password predefinita</div>
+      </div>
+      <button class="auth-btn" id="auth-reset-btn" onclick="doPasswordReset()">Imposta Password</button>
+      <div class="auth-err" id="reset-err"></div>
+      <div class="auth-ok" id="reset-ok"></div>
+    </div>
+  </div>
+
+</div>
 
 <canvas id="stars-canvas"></canvas>
 <div class="cursor" id="cursor"></div>
@@ -495,6 +580,10 @@ select.inp option { background:#1a1a2e; color:#fff; }
       <a onclick="navTo('persone')" id="l-persone">Persone</a>
       <a onclick="navTo('agenda')" id="l-agenda">Agenda</a>
       <a onclick="navTo('finanze')" id="l-finanze">Finanze</a>
+    </div>
+    <div class="nav-user">
+      <span class="nav-username" id="nav-username"></span>
+      <button class="nav-logout" onclick="doLogout()">Esci</button>
     </div>
     <div class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()">
       <span></span><span></span><span></span>
@@ -1414,7 +1503,11 @@ async function loadPeople() {
   if (USE_DB) {
     const { data, error } = await db.from('people').select('*').order('created_at', { ascending: true });
     if (error) { console.error('loadPeople:', error); people = []; return; }
-    people = data;
+    people = await Promise.all(data.map(async r => ({
+      ...r,
+      contact: await decField(r.contact),
+      notes:   await decField(r.notes)
+    })));
   } else {
     try { people = JSON.parse(localStorage.getItem('sa_people')) || []; } catch(e) { people = []; }
   }
@@ -1494,29 +1587,31 @@ async function savePerson() {
   const name = document.getElementById('pf-name').value.trim();
   if (!name) { showToast('Inserisci il nome'); return; }
   const id = document.getElementById('pf-id').value;
-  const payload = {
-    name,
-    proj: prsProj,
-    contact: document.getElementById('pf-contact').value.trim(),
-    notes: document.getElementById('pf-notes').value.trim()
-  };
+  const clearContact = document.getElementById('pf-contact').value.trim();
+  const clearNotes   = document.getElementById('pf-notes').value.trim();
+  const plainPayload = { name, proj: prsProj, contact: clearContact, notes: clearNotes };
+  const dbPayload = USE_DB ? {
+    name, proj: prsProj,
+    contact: await encField(clearContact),
+    notes:   await encField(clearNotes)
+  } : plainPayload;
   if (USE_DB) {
     if (id) {
-      const { error } = await db.from('people').update(payload).eq('id', id);
+      const { error } = await db.from('people').update(dbPayload).eq('id', id);
       if (error) { showToast('Errore modifica'); console.error(error); return; }
       const idx = people.findIndex(x => String(x.id) === String(id));
-      if (idx !== -1) people[idx] = { ...people[idx], ...payload };
+      if (idx !== -1) people[idx] = { ...people[idx], ...plainPayload };
     } else {
-      const { data, error } = await db.from('people').insert(payload).select().single();
+      const { data, error } = await db.from('people').insert(dbPayload).select().single();
       if (error) { showToast('Errore salvataggio'); console.error(error); return; }
-      people.push(data);
+      people.push({ ...data, contact: clearContact, notes: clearNotes });
     }
   } else {
     if (id) {
       const idx = people.findIndex(x => String(x.id) === String(id));
-      if (idx !== -1) people[idx] = { ...people[idx], ...payload };
+      if (idx !== -1) people[idx] = { ...people[idx], ...plainPayload };
     } else {
-      people.push({ ...payload, id: String(Date.now()) });
+      people.push({ ...plainPayload, id: String(Date.now()) });
     }
     _savePeopleLocal();
   }
@@ -1658,15 +1753,184 @@ const SUPA_KEY = 'sb_publishable_poXEbIur3sdi3l5Ybyyo4A_da9OCQLE';
 
 const db = (SUPA_URL.includes('YOUR_PROJECT'))
   ? null
-  : window.supabase.createClient(SUPA_URL, SUPA_KEY);
+  : window.supabase.createClient(SUPA_URL, SUPA_KEY, {
+      auth: { storage: sessionStorage, autoRefreshToken: true, persistSession: true }
+    });
 const USE_DB = !!db;
 
 // aggiorna badge stato DB
 (function() {
   const dot = document.getElementById('db-dot');
   const lbl = document.getElementById('db-label');
-  if (USE_DB) { dot.classList.replace('off','on'); lbl.textContent = 'Supabase'; }
+  if (USE_DB) { dot.classList.replace('off','on'); lbl.textContent = 'Supabase · 🔒'; }
 })();
+
+// ─── CRYPTO (AES-GCM 256 + PBKDF2) ───
+const CRYPTO_SALT = new TextEncoder().encode('sleeveace-hq-v1-salt-2026');
+let _encKey = null;
+
+async function _deriveKey(password, username) {
+  const raw = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(password + '|' + username),
+    { name: 'PBKDF2' }, false, ['deriveKey']
+  );
+  return crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: CRYPTO_SALT, iterations: 200000, hash: 'SHA-256' },
+    raw,
+    { name: 'AES-GCM', length: 256 },
+    false, ['encrypt', 'decrypt']
+  );
+}
+
+async function encField(text) {
+  if (!_encKey || !text) return text || '';
+  const enc = new TextEncoder();
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, _encKey, enc.encode(String(text)));
+  const buf = new Uint8Array(12 + ct.byteLength);
+  buf.set(iv); buf.set(new Uint8Array(ct), 12);
+  return 'ENC:' + btoa(String.fromCharCode(...buf));
+}
+
+async function decField(text) {
+  if (!_encKey || typeof text !== 'string' || !text.startsWith('ENC:')) return text || '';
+  try {
+    const buf = Uint8Array.from(atob(text.slice(4)), c => c.charCodeAt(0));
+    const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: buf.slice(0, 12) }, _encKey, buf.slice(12));
+    return new TextDecoder().decode(plain);
+  } catch { return '⚠ errore decrittazione'; }
+}
+
+async function _reEncryptPeople(oldKey, newKey) {
+  if (!USE_DB) return;
+  const { data } = await db.from('people').select('id, contact, notes');
+  if (!data || !data.length) return;
+  for (const row of data) {
+    const decContact = row.contact?.startsWith('ENC:')
+      ? await (async () => { const tmp = _encKey; _encKey = oldKey; const r = await decField(row.contact); _encKey = tmp; return r; })()
+      : (row.contact || '');
+    const decNotes = row.notes?.startsWith('ENC:')
+      ? await (async () => { const tmp = _encKey; _encKey = oldKey; const r = await decField(row.notes); _encKey = tmp; return r; })()
+      : (row.notes || '');
+    _encKey = newKey;
+    const encContact = await encField(decContact);
+    const encNotes   = await encField(decNotes);
+    await db.from('people').update({ contact: encContact, notes: encNotes }).eq('id', row.id);
+  }
+  _encKey = newKey;
+}
+
+// ─── AUTH ───
+const USER_MAP = {
+  'simonetabozzi':  'simonetabozzi@sleeveace.hq',
+  'andreafinucci':  'andreafinucci@sleeveace.hq'
+};
+const DEFAULT_PWD = 'SLVCFirstPSW1!';
+let _currentUsername = '';
+
+function _showGate(panel) {
+  const gate = document.getElementById('auth-gate');
+  gate.classList.remove('hidden', 'hiding');
+  document.getElementById('auth-login-panel').style.display = panel === 'login' ? '' : 'none';
+  document.getElementById('auth-reset-panel').style.display = panel === 'reset' ? '' : 'none';
+}
+
+function _hideGate() {
+  const gate = document.getElementById('auth-gate');
+  gate.classList.add('hiding');
+  setTimeout(() => gate.classList.add('hidden'), 420);
+}
+
+async function initAuth() {
+  if (!USE_DB) { _hideGate(); _runApp(); return; }
+  const { data: { session } } = await db.auth.getSession();
+  if (session) {
+    _currentUsername = session.user.email.split('@')[0];
+    document.getElementById('nav-username').textContent = _currentUsername;
+    const mustReset = session.user.user_metadata?.must_reset === true;
+    if (mustReset) { _showGate('reset'); }
+    else { _hideGate(); _runApp(); }
+  } else {
+    _showGate('login');
+  }
+}
+
+async function doLogin() {
+  const uname = document.getElementById('auth-username').value.trim().toLowerCase();
+  const pwd   = document.getElementById('auth-password').value;
+  const errEl = document.getElementById('auth-err');
+  const btn   = document.getElementById('auth-login-btn');
+  errEl.textContent = '';
+  if (!USER_MAP[uname]) { errEl.textContent = 'Username non riconosciuto.'; return; }
+  if (!pwd) { errEl.textContent = 'Inserisci la password.'; return; }
+  btn.disabled = true; btn.textContent = 'Accesso in corso…';
+  const { data, error } = await db.auth.signInWithPassword({ email: USER_MAP[uname], password: pwd });
+  btn.disabled = false; btn.textContent = 'Accedi';
+  if (error) { errEl.textContent = 'Credenziali non valide. Riprova.'; return; }
+  _currentUsername = uname;
+  document.getElementById('nav-username').textContent = uname;
+  _encKey = await _deriveKey(pwd, uname);
+  const mustReset = data.user.user_metadata?.must_reset === true;
+  if (mustReset) {
+    document.getElementById('auth-password').value = '';
+    _showGate('reset');
+  } else {
+    _hideGate(); _runApp();
+  }
+}
+
+function checkPwdRules() {
+  const v = document.getElementById('auth-newpwd').value;
+  const set = (id, ok) => { const el = document.getElementById(id); if(el){ el.classList.toggle('ok', ok); } };
+  set('pr-len',        v.length >= 12);
+  set('pr-upper',      /[A-Z]/.test(v));
+  set('pr-lower',      /[a-z]/.test(v));
+  set('pr-num',        /[0-9]/.test(v));
+  set('pr-special',    /[^A-Za-z0-9]/.test(v));
+  set('pr-notdefault', v !== DEFAULT_PWD && v.length > 0);
+}
+
+async function doPasswordReset() {
+  const newPwd  = document.getElementById('auth-newpwd').value;
+  const confirm = document.getElementById('auth-confirmpwd').value;
+  const errEl   = document.getElementById('reset-err');
+  const okEl    = document.getElementById('reset-ok');
+  const btn     = document.getElementById('auth-reset-btn');
+  errEl.textContent = ''; okEl.textContent = '';
+  if (newPwd.length < 12)               { errEl.textContent = 'Password troppo corta (min 12 caratteri).'; return; }
+  if (!/[A-Z]/.test(newPwd))            { errEl.textContent = 'Serve almeno una lettera maiuscola.'; return; }
+  if (!/[a-z]/.test(newPwd))            { errEl.textContent = 'Serve almeno una lettera minuscola.'; return; }
+  if (!/[0-9]/.test(newPwd))            { errEl.textContent = 'Serve almeno un numero.'; return; }
+  if (!/[^A-Za-z0-9]/.test(newPwd))    { errEl.textContent = 'Serve almeno un carattere speciale.'; return; }
+  if (newPwd === DEFAULT_PWD)           { errEl.textContent = 'Non puoi usare la password predefinita.'; return; }
+  if (newPwd !== confirm)               { errEl.textContent = 'Le due password non coincidono.'; return; }
+  btn.disabled = true; btn.textContent = 'Salvataggio…';
+  const oldKey = _encKey;
+  const { error } = await db.auth.updateUser({
+    password: newPwd,
+    data: { must_reset: false }
+  });
+  if (error) { errEl.textContent = 'Errore: ' + error.message; btn.disabled = false; btn.textContent = 'Imposta Password'; return; }
+  const newKey = await _deriveKey(newPwd, _currentUsername);
+  await _reEncryptPeople(oldKey, newKey);
+  _encKey = newKey;
+  okEl.textContent = '✓ Password aggiornata! Accesso in corso…';
+  setTimeout(() => { _hideGate(); _runApp(); }, 1200);
+}
+
+async function doLogout() {
+  if (USE_DB) await db.auth.signOut();
+  _encKey = null; _currentUsername = '';
+  document.getElementById('nav-username').textContent = '';
+  document.getElementById('auth-username').value = '';
+  document.getElementById('auth-password').value = '';
+  document.getElementById('auth-err').textContent = '';
+  _showGate('login');
+}
+
+// Enter key su login
+document.getElementById('auth-password').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('auth-username').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('auth-password').focus(); });
 
 // ─── AGENDA ───
 const TASKS_KEY = 'sa_tasks';
@@ -2083,12 +2347,16 @@ function animateCounter(target) {
 }
 
 // ─── INIT ───
-setTimeout(() => {
-  document.querySelectorAll('#s-home .rv').forEach((el,i) => setTimeout(()=>el.classList.add('vis'), i*80));
-}, 80);
-updateHomeStats();
-loadPeopleHelped();
-setInterval(() => { if (currentSection==='home') updateHomeStats(); }, 15000);
+function _runApp() {
+  setTimeout(() => {
+    document.querySelectorAll('#s-home .rv').forEach((el,i) => setTimeout(()=>el.classList.add('vis'), i*80));
+  }, 80);
+  updateHomeStats();
+  loadPeopleHelped();
+  setInterval(() => { if (currentSection==='home') updateHomeStats(); }, 15000);
+}
+
+initAuth();
 </script>
 </body>
 </html>
