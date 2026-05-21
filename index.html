@@ -473,6 +473,17 @@ select.inp option { background:#1a1a2e; color:#fff; }
   .pc-title { font-size: 36px; }
 }
 
+/* ─── LAB TOOL CARDS ─── */
+.lab-tool-card { background: var(--bg-panel); backdrop-filter: blur(20px); border: 1px solid var(--border-dim); border-radius: 24px; padding: 32px; cursor: pointer; position: relative; overflow: hidden; transition: all 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; min-height: 280px; }
+.lab-tool-card::after { content:''; position:absolute; inset:0; background:radial-gradient(500px circle at var(--mouse-x,50%) var(--mouse-y,50%), rgba(255,255,255,0.04), transparent 40%); opacity:0; transition:opacity 0.3s; z-index:1; pointer-events:none; }
+.lab-tool-card:hover::after { opacity:1; }
+.lab-tool-card:hover { border-color: color-mix(in srgb, var(--ltc-accent,#fff) 40%, transparent); box-shadow: 0 16px 48px var(--ltc-glow,rgba(255,255,255,0.06)); transform: translateY(-4px); }
+.ltc-top { flex:1; position:relative; z-index:2; }
+.ltc-bottom { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; position:relative; z-index:2; margin-top:20px; padding-top:20px; border-top:1px solid var(--border-dim); }
+.ltc-tag { font-family: var(--fm); font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; display: inline-block; }
+.ltc-title { font-family: var(--fd); font-size: 36px; letter-spacing: 2px; margin-bottom: 12px; line-height: 1; }
+.ltc-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
 /* ─── AUTH GATE ─── */
 #auth-gate { position:fixed; inset:0; z-index:9999; background:#050505; display:flex; align-items:center; justify-content:center; transition:opacity 0.4s ease; }
 #auth-gate.hiding { opacity:0; pointer-events:none; }
@@ -727,7 +738,7 @@ select.inp option { background:#1a1a2e; color:#fff; }
         <div>
           <span class="pc-tag">Progetto 01</span>
           <h3 class="pc-title">LifeFlow</h3>
-          <p class="pc-desc">Trading Journal & Life OS platform per ottimizzare performance e mindset dei trader.</p>
+          <p class="pc-desc">Tutta la vita in un posto solo. Trading journal, habit tracker, goal system, expense tracker e leaderboard. Un OS completo per trader e persone ambiziose.</p>
         </div>
         <div class="pc-arrow">↗</div>
       </div>
@@ -735,7 +746,7 @@ select.inp option { background:#1a1a2e; color:#fff; }
         <div>
           <span class="pc-tag">Progetto 02</span>
           <h3 class="pc-title">Lab</h3>
-          <p class="pc-desc">Sala segnale trading istituzionale su NQ e Gold. Analisi e setup live su Telegram.</p>
+          <p class="pc-desc">Segnali XAUUSD, risultati ES e corso completo sulla nostra strategia. Entra dal canale Telegram, impara a operare come operiamo noi.</p>
         </div>
         <div class="pc-arrow">↗</div>
       </div>
@@ -753,15 +764,14 @@ select.inp option { background:#1a1a2e; color:#fff; }
     <div class="ph rv">
       <div class="ph-bc">SleeveAce / LifeFlow</div>
       <h2 class="text-lf">LIFEFLOW</h2>
-      <p class="ph-sub">The complete platform for traders and goal-oriented professionals to track performance, build habits, and achieve consistent success.</p>
+      <p class="ph-sub">Un posto solo per tutta la tua vita. Tieni traccia del tuo trading, delle tue abitudini, dei tuoi obiettivi e delle tue spese — e scala la leaderboard.</p>
     </div>
 
     <div class="grid-2-asym mb-60">
       <div class="glass-box rv">
         <div class="block-title">Panoramica</div>
-        <p style="font-size:18px;color:#fff;margin-bottom:16px;font-weight:600;">Stop Gambling. Start Trading.</p>
-        <p style="color:var(--text-muted);margin-bottom:28px;line-height:1.8;">LifeFlow è una piattaforma all-in-one costruita su Lovable + Supabase. Combina un journal di trading avanzato con sistemi di life optimization basati sulla metodologia Bob Proctor. I piani a pagamento sono attualmente attivi e performanti.</p>
-        <a href="https://slvc-lifeflow.com" target="_blank" class="btn btn-lf">Accedi alla Piattaforma →</a>
+        <p style="font-size:18px;color:#fff;margin-bottom:16px;font-weight:600;">Un OS per la tua vita</p>
+        <p style="color:var(--text-muted);margin-bottom:0;line-height:1.8;">Lifeflow non è solo un trading journal. È il sistema operativo della tua vita. Traccia performance, costruisci abitudini, gestisci spese, imposta obiettivi — e vedi dove ti posizioni rispetto agli altri con la leaderboard globale.</p>
       </div>
       <div class="glass-box rv">
         <div class="block-title">Dati Tecnici</div>
@@ -772,14 +782,38 @@ select.inp option { background:#1a1a2e; color:#fff; }
       </div>
     </div>
 
-    <div class="block-title rv">Moduli & Funzionalità</div>
+    <div class="block-title rv">Modulo Trading</div>
     <div class="grid-3 mb-60">
       <div class="feat-item rv"><div class="feat-icon fi-lf">📊</div><div><h4>Session Tracking</h4><p>PnL, win rate, drawdown, breakdown per strategia.</p></div></div>
       <div class="feat-item rv"><div class="feat-icon fi-lf">🤖</div><div><h4>AI Coach</h4><p>Analisi comportamentale e feedback personalizzato.</p></div></div>
       <div class="feat-item rv"><div class="feat-icon fi-lf">📖</div><div><h4>Playbook</h4><p>Regole, checklist e condizioni di mercato strutturate.</p></div></div>
       <div class="feat-item rv"><div class="feat-icon fi-lf">🏆</div><div><h4>Challenge Tracker</h4><p>Tracker drawdown per challenge prop (Topstep, TPT).</p></div></div>
-      <div class="feat-item rv"><div class="feat-icon fi-lf">🎯</div><div><h4>4 Ace Method</h4><p>Framework obiettivi ABC basato su Bob Proctor.</p></div></div>
+      <div class="feat-item rv"><div class="feat-icon fi-lf">🎯</div><div><h4>4 Ace Method</h4><p>Framework obiettivi basato su Bob Proctor.</p></div></div>
       <div class="feat-item rv" style="opacity:0.45;"><div class="feat-icon fi-lf" style="filter:grayscale(1);">🔗</div><div><h4>Broker Sync <span class="badge b-purple" style="margin-left:6px;font-size:8px;">Prossimo</span></h4><p>Import automatico da Rithmic e NinjaTrader.</p></div></div>
+    </div>
+
+    <div class="block-title rv">Modulo Life</div>
+    <div class="grid-3 mb-60">
+      <div class="feat-item rv"><div class="feat-icon fi-lf">✅</div><div><h4>Habit Tracker</h4><p>Costruisci abitudini solide giorno dopo giorno.</p></div></div>
+      <div class="feat-item rv"><div class="feat-icon fi-lf">🎯</div><div><h4>Goal System</h4><p>Obiettivi chiari, milestone e tracking dei progressi.</p></div></div>
+      <div class="feat-item rv"><div class="feat-icon fi-lf">💸</div><div><h4>Expense Tracker</h4><p>Tieni sotto controllo entrate e uscite personali.</p></div></div>
+      <div class="feat-item rv" style="opacity:0.45;"><div class="feat-icon fi-lf" style="filter:grayscale(1);">🍎</div><div><h4>Diet <span class="badge b-dim" style="margin-left:6px;font-size:8px;">Prossimo</span></h4><p>Traccia alimentazione e macro.</p></div></div>
+      <div class="feat-item rv" style="opacity:0.45;"><div class="feat-icon fi-lf" style="filter:grayscale(1);">💪</div><div><h4>Allenamenti <span class="badge b-dim" style="margin-left:6px;font-size:8px;">Prossimo</span></h4><p>Schede, progressi e PR.</p></div></div>
+      <div class="feat-item rv" style="opacity:0.45;"><div class="feat-icon fi-lf" style="filter:grayscale(1);">📈</div><div><h4>Investimenti <span class="badge b-dim" style="margin-left:6px;font-size:8px;">Prossimo</span></h4><p>Portfolio e rendimenti.</p></div></div>
+    </div>
+
+    <div class="block-title rv">Leaderboard</div>
+    <div class="glass-box rv mb-60" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px;">
+      <div style="flex:1;min-width:260px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <p style="font-size:18px;color:#fff;font-weight:600;margin:0;">Leaderboard Globale</p>
+          <span class="badge b-green">ATTIVO</span>
+        </div>
+        <p style="color:var(--text-muted);line-height:1.8;margin:0;">Tutti i moduli alimentano una leaderboard globale. Più sei costante — nel trading, negli habit, negli obiettivi — più sali. Non è competizione, è responsabilità.</p>
+      </div>
+      <div style="flex-shrink:0;">
+        <a href="https://slvc-lifeflow.com" target="_blank" class="btn btn-lf">Accedi a LifeFlow →</a>
+      </div>
     </div>
 
     <div class="grid-2-asym mb-60">
@@ -825,33 +859,66 @@ select.inp option { background:#1a1a2e; color:#fff; }
     <div class="ph rv">
       <div class="ph-bc">SleeveAce / Lab</div>
       <h2 class="text-lab">LAB</h2>
-      <p class="ph-sub">Master the Markets with Institutional Analysis. Verified setups and market bias delivered straight to your Telegram.</p>
+      <p class="ph-sub">Tre strumenti distinti. Un solo obiettivo: fare sul serio.</p>
     </div>
 
     <div class="grid-2-asym mb-60">
       <div class="glass-box rv">
         <div class="block-title">Panoramica</div>
-        <p style="font-size:18px;color:#fff;margin-bottom:16px;font-weight:600;">Sala segnale trading istituzionale</p>
-        <p style="color:var(--text-muted);margin-bottom:28px;line-height:1.8;">Il cuore operativo di SleeveAce. Analisi di mercato, livelli chiave e segnali in tempo reale per NQ e Gold direttamente sul gruppo Telegram privato. Focus puro su risk management ed esecuzione.</p>
-        <a href="https://t.me/+hUGoF_UsD8NmNTVk" target="_blank" class="btn btn-lab">Unisciti al Canale Telegram →</a>
+        <p style="font-size:18px;color:#fff;margin-bottom:16px;font-weight:600;">SleeveAce Lab</p>
+        <p style="color:var(--text-muted);margin-bottom:0;line-height:1.8;">Il Lab non ti promette di diventare ricco. Ti dà strumenti concreti per pagare qualche bolletta in più, imparare a operare su ES con la nostra strategia, e vedere i risultati reali senza filtri.</p>
       </div>
       <div class="glass-box rv">
         <div class="block-title">Dati Tecnici</div>
         <div class="info-row"><span class="info-label">Status</span><span class="badge b-green">ATTIVO</span></div>
         <div class="info-row"><span class="info-label">Piattaforma</span><span class="info-val">Telegram Privato</span></div>
-        <div class="info-row"><span class="info-label">Mercati</span><span class="info-val" style="font-family:var(--fm);font-size:12px;">NQ · Gold (XAU/USD)</span></div>
+        <div class="info-row"><span class="info-label">Mercati</span><span class="info-val" style="font-family:var(--fm);font-size:12px;">XAUUSD · ES (E-mini S&P 500)</span></div>
         <div class="info-row"><span class="info-label">Sito Promo</span><span class="info-val"><a href="https://slvcprj.github.io/sleeveace-trade-lab/" target="_blank">sleeveace-trade-lab</a></span></div>
       </div>
     </div>
 
-    <div class="block-title rv">Cosa Trovi Nel Gruppo</div>
+    <div class="block-title rv">I tre strumenti del Lab</div>
     <div class="grid-3 mb-60">
-      <div class="feat-item rv"><div class="feat-icon fi-lab">📊</div><div><h4>Analisi Istituzionale</h4><p>Bias e zone chiave fornite pre-sessione.</p></div></div>
-      <div class="feat-item rv"><div class="feat-icon fi-lab">⚡</div><div><h4>Segnali Live</h4><p>Entry, stop e target con indicazioni precise del rischio.</p></div></div>
-      <div class="feat-item rv"><div class="feat-icon fi-lab">📋</div><div><h4>Playbook Regole</h4><p>Standard operativi per coerenza nell'esecuzione.</p></div></div>
-      <div class="feat-item rv"><div class="feat-icon fi-lab">🔄</div><div><h4>Post-Market Review</h4><p>Analisi esecuzioni per miglioramento continuo.</p></div></div>
-      <div class="feat-item rv"><div class="feat-icon fi-lab">🎓</div><div><h4>Educazione</h4><p>Materiali su gestione rischio e psicologia.</p></div></div>
-      <div class="feat-item rv"><div class="feat-icon fi-lab">💰</div><div><h4>Vantaggi Partner</h4><p>Condizioni spread e bonus esclusivi dai broker.</p></div></div>
+
+      <!-- GOLDWIRE -->
+      <div class="lab-tool-card rv" onclick="openLabModal('goldwire')" style="--ltc-accent:#EAB308;--ltc-glow:rgba(234,179,8,0.15);">
+        <div class="ltc-top">
+          <span class="ltc-tag">XAUUSD · Free</span>
+          <h3 class="ltc-title" style="background:linear-gradient(135deg,#EAB308,#FDE68A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">GOLDWIRE</h3>
+          <p class="ltc-desc">Segnali operativi su XAUUSD direttamente sul gruppo Telegram. Accesso tramite affiliazione Ava. Non promettiamo ricchezza — solo strumenti per pagare qualche bolletta in più.</p>
+        </div>
+        <div class="ltc-bottom">
+          <span class="badge b-yellow">RICHIEDE AVA</span>
+          <a href="https://t.me/+hUGoF_UsD8NmNTVk" target="_blank" class="btn btn-sm" style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);color:#EAB308;" onclick="event.stopPropagation()">Accedi con Ava →</a>
+        </div>
+      </div>
+
+      <!-- THE LEDGER -->
+      <div class="lab-tool-card rv" onclick="openLabModal('ledger')" style="--ltc-accent:#22C55E;--ltc-glow:rgba(34,197,94,0.15);">
+        <div class="ltc-top">
+          <span class="ltc-tag">ES · Risultati Pubblici</span>
+          <h3 class="ltc-title" style="background:linear-gradient(135deg,#22C55E,#86EFAC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">THE LEDGER</h3>
+          <p class="ltc-desc">Tutti i risultati dei nostri trade su ES, documentati e pubblici. Nessun filtro, nessun cherry picking. Trasparenza totale — win e loss.</p>
+        </div>
+        <div class="ltc-bottom">
+          <span class="badge b-green">ACCESSO LIBERO</span>
+          <button class="btn btn-sm" style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.35);color:#22C55E;" onclick="event.stopPropagation();openLabModal('ledger')">Vedi i Risultati →</button>
+        </div>
+      </div>
+
+      <!-- PITPASS -->
+      <div class="lab-tool-card rv" onclick="openLabModal('pitpass')" style="--ltc-accent:#84CC16;--ltc-glow:rgba(132,204,22,0.15);">
+        <div class="ltc-top">
+          <span class="ltc-tag">ES · Corso Completo</span>
+          <h3 class="ltc-title" style="background:linear-gradient(135deg,#84CC16,#D9F99D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">PITPASS</h3>
+          <p class="ltc-desc">Vuoi operare su ES con la nostra strategia? Questo è il corso. Ti insegniamo tutto — dalla logica istituzionale all'esecuzione. Niente segnali, solo metodo.</p>
+        </div>
+        <div class="ltc-bottom">
+          <span class="badge b-purple">PREMIUM</span>
+          <button class="btn btn-sm" style="background:rgba(132,204,22,0.12);border:1px solid rgba(132,204,22,0.35);color:#84CC16;" onclick="event.stopPropagation();openLabModal('pitpass')">Scopri il Corso →</button>
+        </div>
+      </div>
+
     </div>
 
     <div class="grid-2-asym mb-60">
@@ -1216,6 +1283,112 @@ select.inp option { background:#1a1a2e; color:#fff; }
 </div>
 
 <!-- ════════════════════════════════════════
+     MODAL — GOLDWIRE
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="goldwire-overlay" onclick="closeLabModal('goldwire')"></div>
+<div class="modal-panel" id="modal-goldwire">
+  <div class="modal-handle"></div>
+  <div class="modal-header">
+    <div class="modal-title" style="background:linear-gradient(135deg,#EAB308,#FDE68A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">GOLDWIRE</div>
+    <button class="modal-close" onclick="closeLabModal('goldwire')">✕</button>
+  </div>
+  <div class="modal-body">
+    <p style="font-family:var(--fm);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#EAB308;margin-bottom:4px;">Segnali XAUUSD via Telegram</p>
+    <div style="background:rgba(234,179,8,0.05);border:1px solid rgba(234,179,8,0.15);border-radius:16px;padding:24px;">
+      <p style="font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(234,179,8,0.6);margin-bottom:16px;">Come funziona</p>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:var(--fm);font-size:11px;color:#EAB308;flex-shrink:0;margin-top:2px;">01</span>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">Per accedere al gruppo devi prima aprire un conto tramite la nostra affiliazione Ava.</p>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:var(--fm);font-size:11px;color:#EAB308;flex-shrink:0;margin-top:2px;">02</span>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">Una volta verificato l'account Ava, ricevi il link di accesso al gruppo Telegram privato.</p>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:var(--fm);font-size:11px;color:#EAB308;flex-shrink:0;margin-top:2px;">03</span>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">Nel gruppo ricevi segnali operativi su XAUUSD con entry, stop e target.</p>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:var(--fm);font-size:11px;color:#EAB308;flex-shrink:0;margin-top:2px;">04</span>
+          <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin:0;">I risultati vengono documentati su The Ledger.</p>
+        </div>
+      </div>
+    </div>
+    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-dim);border-radius:16px;padding:24px;">
+      <p style="font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Posizionamento</p>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.7;margin:0;">Goldwire non è un servizio per diventare ricchi. È uno strumento serio per chi vuole usare il mercato dell'oro per generare extra income — pagare le bollette, mettere da parte qualcosa. Niente promesse irrealistiche.</p>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <span class="badge b-yellow">RICHIEDE AVA</span>
+      <a href="https://t.me/+hUGoF_UsD8NmNTVk" target="_blank" class="btn btn-sm" style="background:rgba(234,179,8,0.12);border:1px solid rgba(234,179,8,0.35);color:#EAB308;">Accedi con Ava →</a>
+    </div>
+    <button class="btn btn-outline modal-cta" onclick="closeLabModal('goldwire')">Chiudi</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL — THE LEDGER
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="ledger-overlay" onclick="closeLabModal('ledger')"></div>
+<div class="modal-panel" id="modal-ledger">
+  <div class="modal-handle"></div>
+  <div class="modal-header">
+    <div class="modal-title" style="background:linear-gradient(135deg,#22C55E,#86EFAC);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">THE LEDGER</div>
+    <button class="modal-close" onclick="closeLabModal('ledger')">✕</button>
+  </div>
+  <div class="modal-body">
+    <p style="font-family:var(--fm);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#22C55E;margin-bottom:4px;">Risultati ES — trasparenza totale</p>
+    <div style="background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.15);border-radius:16px;padding:24px;">
+      <p style="font-size:15px;color:var(--text-muted);line-height:1.75;margin:0;">The Ledger è il registro pubblico di tutti i nostri trade su ES (E-mini S&P 500 Futures). Ogni trade documentato: data, entry, exit, P&L. Win e loss senza filtri. Puoi vedere esattamente come operiamo prima di decidere se fare il corso.</p>
+    </div>
+    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-dim);border-radius:16px;padding:24px;">
+      <p style="font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Nota Tecnica</p>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.7;margin:0;">ES non viene tradato su broker forex — richiede accesso ai futures tramite piattaforme come Rithmic o NinjaTrader. Per questo non mandiamo segnali diretti, ma insegniamo il metodo tramite Pitpass.</p>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <span class="badge b-green">ACCESSO LIBERO</span>
+    </div>
+    <button class="btn btn-outline modal-cta" onclick="closeLabModal('ledger')">Chiudi</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     MODAL — PITPASS
+════════════════════════════════════════ -->
+<div class="modal-overlay" id="pitpass-overlay" onclick="closeLabModal('pitpass')"></div>
+<div class="modal-panel" id="modal-pitpass">
+  <div class="modal-handle"></div>
+  <div class="modal-header">
+    <div class="modal-title" style="background:linear-gradient(135deg,#84CC16,#D9F99D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">PITPASS</div>
+    <button class="modal-close" onclick="closeLabModal('pitpass')">✕</button>
+  </div>
+  <div class="modal-body">
+    <p style="font-family:var(--fm);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#84CC16;margin-bottom:4px;">Corso completo su ES — la nostra strategia</p>
+    <div style="background:rgba(132,204,22,0.05);border:1px solid rgba(132,204,22,0.15);border-radius:16px;padding:24px;">
+      <p style="font-size:15px;color:var(--text-muted);line-height:1.75;margin:0;">Pitpass ti insegna a operare su ES con la stessa strategia che usiamo noi. Non è un corso generico — è il metodo specifico che vedi documentato su The Ledger. Dalla logica istituzionale all'esecuzione pratica.</p>
+    </div>
+    <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border-dim);border-radius:16px;padding:24px;">
+      <p style="font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">Cosa impari</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#84CC16;flex-shrink:0;">→</span><p style="font-size:14px;color:var(--text-muted);line-height:1.5;margin:0;">Come leggere il mercato ES con logica istituzionale</p></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#84CC16;flex-shrink:0;">→</span><p style="font-size:14px;color:var(--text-muted);line-height:1.5;margin:0;">Entry, stop e target con la nostra strategia</p></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#84CC16;flex-shrink:0;">→</span><p style="font-size:14px;color:var(--text-muted);line-height:1.5;margin:0;">Risk management e sizing</p></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#84CC16;flex-shrink:0;">→</span><p style="font-size:14px;color:var(--text-muted);line-height:1.5;margin:0;">Come configurare la piattaforma (Rithmic / NinjaTrader)</p></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="color:#84CC16;flex-shrink:0;">→</span><p style="font-size:14px;color:var(--text-muted);line-height:1.5;margin:0;">Psicologia e disciplina operativa</p></div>
+      </div>
+    </div>
+    <div style="background:rgba(168,85,247,0.05);border:1px solid rgba(168,85,247,0.15);border-radius:14px;padding:18px;">
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.65;margin:0;"><span style="color:#c084fc;font-weight:600;">Nota:</span> Chi completa Pitpass entra naturalmente nell'ecosistema Lifeflow — il trading journal è il passo successivo logico.</p>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <span class="badge b-purple">PREMIUM</span>
+    </div>
+    <button class="btn btn-outline modal-cta" onclick="closeLabModal('pitpass')">Chiudi</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
      MODAL — NUOVA VOCE FINANZIARIA
 ════════════════════════════════════════ -->
 <div class="modal-overlay" id="fin-overlay" onclick="closeFinModal()"></div>
@@ -1272,7 +1445,7 @@ document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
 (function anim(){ rx+=(mx-rx)*0.14; ry+=(my-ry)*0.14; cur.style.transform=`translate(${mx-4}px,${my-4}px)`; crr.style.transform=`translate(${rx-16}px,${ry-16}px)`; requestAnimationFrame(anim); })();
 
 // ─── CARD GLOW ───
-document.querySelectorAll('.p-card').forEach(c => {
+document.querySelectorAll('.p-card, .lab-tool-card').forEach(c => {
   c.addEventListener('mousemove', e => {
     const r = c.getBoundingClientRect();
     c.style.setProperty('--mouse-x', `${e.clientX-r.left}px`);
@@ -1654,6 +1827,18 @@ function selectType(el) {
   if(amtEl) amtEl.style.color = finType==='entrata' ? '#4ade80' : '#f87171';
 }
 
+// ─── LAB MODAL HELPERS ───
+function openLabModal(id) {
+  document.getElementById(id + '-overlay').classList.add('open');
+  document.getElementById('modal-' + id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLabModal(id) {
+  document.getElementById(id + '-overlay').classList.remove('open');
+  document.getElementById('modal-' + id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 // ─── MODAL HELPERS ───
 function openTaskModal() {
   document.getElementById('task-overlay').classList.add('open');
@@ -1682,7 +1867,7 @@ function closeFinModal() {
 
 // Close modals on Escape
 document.addEventListener('keydown', e => {
-  if(e.key === 'Escape') { closeTaskModal(); closeFinModal(); closeAffModal(); closePersonModal(); }
+  if(e.key === 'Escape') { closeTaskModal(); closeFinModal(); closeAffModal(); closePersonModal(); closeLabModal('goldwire'); closeLabModal('ledger'); closeLabModal('pitpass'); }
 });
 
 // ─── SUPABASE ───
